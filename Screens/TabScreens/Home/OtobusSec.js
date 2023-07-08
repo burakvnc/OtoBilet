@@ -58,36 +58,26 @@ export default function OtobusSec({ navigation, route }) {
           where("kalkis", "==", selectedCity),
           where("inis", "==", selectedCity2)
         );
+        const querySnapshot = await getDocs(q);
 
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
-          if (!querySnapshot.empty) {
-            const userDataArray = [];
-            querySnapshot.forEach((docSnapshot) => {
-              const userData = docSnapshot.data();
-              userDataArray.push(userData);
-            });
-            setData(userDataArray);
-            console.log(userDataArray);
-          } else {
-            console.log("Yok");
-            setData(null);
-          }
-        });
-
-        return unsubscribe; // Return the unsubscribe function
+        if (!querySnapshot.empty) {
+          const userDataArray = [];
+          querySnapshot.forEach((docSnapshot) => {
+            const userData = docSnapshot.data();
+            userDataArray.push(userData);
+          });
+          setData(userDataArray);
+          console.log(userDataArray);
+        } else {
+          console.log("Yok");
+          setData(null);
+        }
       } catch (error) {
         console.log("Error getting user document:", error);
       }
     };
 
-    const unsubscribe = getSeferler();
-
-    // Cleanup function to unsubscribe when the component unmounts or dependencies change
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
+    getSeferler();
   }, [selectedDate, selectedCity, selectedCity2]);
 
   const SeferItem = ({ item }) => {
