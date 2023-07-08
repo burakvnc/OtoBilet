@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CityProvider } from "./Screens/TabScreens//Home/CityContext";
 import { SignInContextProvider } from "./authContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 export default function App() {
   return (
     <SignInContextProvider>

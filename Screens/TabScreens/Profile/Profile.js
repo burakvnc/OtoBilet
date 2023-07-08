@@ -23,6 +23,7 @@ export default function Profile() {
 
   return (
     <View style={styles.container}>
+      <Text>Burada isterseniz bilet geçmişini de listeletebilirim.</Text>
       <TouchableOpacity style={styles.button} onPress={handleLogout}>
         <Text style={styles.buttonText}>Çıkış Yap</Text>
       </TouchableOpacity>

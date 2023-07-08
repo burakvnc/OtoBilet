@@ -12,6 +12,7 @@ import {
 } from "firebase/auth";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../../config";
+import FlashMessage, { showMessage } from "react-native-flash-message";
 export default function Create({navigation}) {
   const { dispatchSignedIn } = useContext(SignInContext);
   const [name, setname] = useState("");
@@ -110,21 +111,34 @@ export default function Create({navigation}) {
                 });
             })
             .catch((error) => {
-              console.log("Error saving user data: ", error);
+              showMessage({
+                message: error.message,
+                type: "danger",
+                duration: 2000, // Display for 2 seconds
+              });
             });
         })
         .catch((error) => {
-          console.log("Error creating user: ", error);
+          showMessage({
+            message: error.message,
+            type: "danger",
+            duration: 2000, // Display for 2 seconds
+          });
         });
     } else {
-      console.log("Please fill in all the fields");
+      showMessage({
+        message: "Lütfen Bütün Bilgileri Doğru Girin",
+        type: "danger",
+        duration: 2000, // Display for 2 seconds
+      });
     }
   };
 
   return (
+    <>
     <View style={styles.LoginPage}>
-      <View style={{ height: "70%",width:"90%",marginTop:"10%" }}>
-        <ScrollView style={styles.LoginScroll} showsVerticalScrollIndicator={false}>
+      <View style={{ height: "70%",width:"90%",marginTop:"5%" }}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.fieldContainer}>
             <Text style={styles.TextStyle}>Adınız</Text>
             <TextInput
@@ -355,11 +369,9 @@ export default function Create({navigation}) {
               cancelText="Kapat"
               style={styles.input2}
               initValue="Cinsiyetinizi Seçin"
-              optionTextStyle={{ color: "black" }}
               initValueTextStyle={{ textAlign: "left", color: "#00000064" }}
               selectStyle={{
                 borderWidth: 2,
-                borderRadius: 15,
                 borderColor: gender === "" ? "#00000064" : "#3a5a40",
               }}
               selectedItemTextStyle={{ color: "#3a5a40" }}
@@ -377,7 +389,7 @@ export default function Create({navigation}) {
                   height: 16,
                   alignSelf: "flex-end",
                   position: "absolute",
-                  top: 40,
+                  top: 30,
                   right: 10,
                 }}
               />
@@ -543,5 +555,7 @@ export default function Create({navigation}) {
         <Text style={styles.buttonText2}>Zaten Hesabın var mı? Giriş Yap</Text>
       </TouchableOpacity>
     </View>
+    <FlashMessage position="top" />
+    </>
   );
 }
