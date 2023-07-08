@@ -1,20 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
+import { StatusBar } from "expo-status-bar";
+import RootNavigator from "./rootNavigation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CityProvider } from "./Screens/TabScreens//Home/CityContext";
+import { SignInContextProvider } from "./authContext";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SignInContextProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <CityProvider>
+          <StatusBar hidden />
+          <RootNavigator />
+        </CityProvider>
+      </GestureHandlerRootView>
+    </SignInContextProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
