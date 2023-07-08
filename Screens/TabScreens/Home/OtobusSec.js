@@ -17,6 +17,7 @@ import {
   query,
   getDocs,
   collection,
+  onSnapshot,
   getDoc,
 } from "firebase/firestore";
 import Popover, { PopoverPlacement } from "react-native-popover-view";
@@ -41,7 +42,13 @@ export default function OtobusSec({ navigation, route }) {
     selectedDate,
     selectedDate2,
   } = route.params;
-
+  console.log(
+    selectedOption,
+    selectedCity,
+    selectedCity2,
+    selectedDate,
+    selectedDate2
+  );
   useEffect(() => {
     const getSeferler = async () => {
       try {
@@ -51,7 +58,7 @@ export default function OtobusSec({ navigation, route }) {
           where("kalkis", "==", selectedCity),
           where("inis", "==", selectedCity2)
         );
-        
+
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
           if (!querySnapshot.empty) {
             const userDataArray = [];
@@ -66,16 +73,15 @@ export default function OtobusSec({ navigation, route }) {
             setData(null);
           }
         });
-  
+
         return unsubscribe; // Return the unsubscribe function
-  
       } catch (error) {
         console.log("Error getting user document:", error);
       }
     };
-  
+
     const unsubscribe = getSeferler();
-  
+
     // Cleanup function to unsubscribe when the component unmounts or dependencies change
     return () => {
       if (unsubscribe) {
@@ -83,7 +89,6 @@ export default function OtobusSec({ navigation, route }) {
       }
     };
   }, [selectedDate, selectedCity, selectedCity2]);
-  
 
   const SeferItem = ({ item }) => {
     const animatedHeight = useState(new Animated.Value(0))[0];
@@ -107,12 +112,12 @@ export default function OtobusSec({ navigation, route }) {
           updatedSeats.splice(seatIndex, 1);
           console.log(updatedSeats);
           setPopoverVisible(true);
-          setSelectedSeat(null); 
+          setSelectedSeat(null);
           setSeatsSelected(updatedSeats);
         } else {
           console.log([...seatsSelected, { id: seatNumber, durum: null }]);
-          setPopoverVisible(true); 
-          setSelectedSeat(seatNumber); 
+          setPopoverVisible(true);
+          setSelectedSeat(seatNumber);
           setSeatsSelected([...seatsSelected, { id: seatNumber, durum: null }]);
         }
       } else {
@@ -135,8 +140,8 @@ export default function OtobusSec({ navigation, route }) {
         }
 
         console.log([...seatsSelected, { id: seatNumber, durum: gender }]);
-        setPopoverVisible(true); 
-        setSelectedSeat(seatNumber); 
+        setPopoverVisible(true);
+        setSelectedSeat(seatNumber);
         setSeatsSelected([...seatsSelected, { id: seatNumber, durum: gender }]);
       }
 
@@ -551,7 +556,7 @@ export default function OtobusSec({ navigation, route }) {
         <>
           <Image
             source={require("../../../assets/images/searching.png")}
-            style={{ width: "10%", height: "10%", resizeMode: "contain"}}
+            style={{ width: "10%", height: "10%", resizeMode: "contain" }}
           />
           <Text style={styles.loadingText}>Aranıyor...</Text>
         </>
@@ -566,8 +571,7 @@ export default function OtobusSec({ navigation, route }) {
       ) : (
         <View style={styles.OtobusSecContainer}>
           <FlashList
-            key={({ item }) => <SeferItem item={item} />}
-            renderItem={({ item }) => <SeferItem item={item} />}
+            renderItem={({ item }) => <SeferItem key={item.id} item={item} />}
             data={data}
             estimatedItemSize={139}
             showsVerticalScrollIndicator={false}
