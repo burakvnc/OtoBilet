@@ -3,6 +3,8 @@
 
 Otobüs Bileti Alma Uygulaması
 
+Otobüs Bileti Alabilmek için Ankara'dan İstanbul'a 11 Temmuz gününe gidiş bileti aratmanız gerekmektedir.
+
 
 ## Kullanılan Diller
 
@@ -25,7 +27,9 @@ Yüklemek için gerekenler
 
 https://appetize.io/embed/doi6jiigne3pamul2bfn2mxmmi
 
-  
+## APK dosyası
+
+https://drive.google.com/file/d/11KJTQ1W7CAfzOem_5ylDAXjlmPtaGr0H/view?usp=sharing
 
 ## Ekran Görüntüleri
 
