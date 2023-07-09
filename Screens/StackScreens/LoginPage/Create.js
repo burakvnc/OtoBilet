@@ -35,7 +35,6 @@ export default function Create({navigation}) {
       payload: { userToken: "signed-in" },
     });
 
-    // Store the user token in AsyncStorage
     AsyncStorage.setItem("userToken", "signed-in")
       .then(() => {
         console.log("Giriş Başarılı");
@@ -61,19 +60,16 @@ export default function Create({navigation}) {
       kimlikno !== ""
     ) {
       if (password !== passwordrepeat) {
-        // Passwords don't match
         console.log("Passwords don't match");
         return;
       }
 
       if (password.length < 6) {
-        // Password is too short
         console.log("Password is too short");
         return;
       }
 
       if (!validateEmail(email)) {
-        // Invalid email format
         console.log("Invalid email format");
         return;
       }
@@ -101,7 +97,6 @@ export default function Create({navigation}) {
                 payload: { userToken: "signed-in" },
               });
 
-              // Store the user token in AsyncStorage
               AsyncStorage.setItem("userToken", "signed-in")
                 .then(() => {
                   console.log("Giriş Başarılı");
@@ -114,7 +109,7 @@ export default function Create({navigation}) {
               showMessage({
                 message: error.message,
                 type: "danger",
-                duration: 2000, // Display for 2 seconds
+                duration: 2000,
               });
             });
         })
@@ -122,14 +117,14 @@ export default function Create({navigation}) {
           showMessage({
             message: error.message,
             type: "danger",
-            duration: 2000, // Display for 2 seconds
+            duration: 2000, 
           });
         });
     } else {
       showMessage({
         message: "Lütfen Bütün Bilgileri Doğru Girin",
         type: "danger",
-        duration: 2000, // Display for 2 seconds
+        duration: 2000, 
       });
     }
   };
@@ -310,10 +305,8 @@ export default function Create({navigation}) {
                 },
               ]}
               onChangeText={(value) => {
-                // Remove non-digit characters from the input
                 const digitsOnly = value.replace(/\D/g, "");
 
-                // Apply the regex pattern to format the input as DD.MM.YYYY
                 const formattedDate = digitsOnly.replace(
                   /^(\d{2})(\d{0,2})(\d{0,4}).*/,
                   (match, p1, p2, p3) => {

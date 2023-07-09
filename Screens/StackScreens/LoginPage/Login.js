@@ -15,14 +15,12 @@ export default function Login({ navigation }) {
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // User successfully logged in
         const user = userCredential.user;
         dispatchSignedIn({
           type: "UPDATE_SIGN_IN",
           payload: { userToken: "signed-in" },
         });
 
-        // Store the user token in AsyncStorage
         AsyncStorage.setItem("userToken", "signed-in")
           .then(() => {
             console.log("Giriş Başarılı");
@@ -33,12 +31,11 @@ export default function Login({ navigation }) {
         console.log("Login successful:", user);
       })
       .catch((error) => {
-        // An error occurred during login
         console.log("Login error:", error);
         showMessage({
           message: error.message,
           type: "danger",
-          duration: 2000, // Display for 2 seconds
+          duration: 2000, 
         });
       });
   };
