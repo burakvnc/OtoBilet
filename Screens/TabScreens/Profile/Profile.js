@@ -11,7 +11,6 @@ export default function Profile() {
       payload: { userToken: "signed-out" },
     });
 
-    // Store the user token in AsyncStorage
     AsyncStorage.setItem("userToken", "signed-out")
       .then(() => {
         console.log("Çıkış Başarılı.");
